@@ -29,7 +29,7 @@
         <input id="utcOffset" name="utcOffset" type="text" value="+00:00">
         <label>(-06:00 for CST)</label><br>
         <label for="dateFormat">Format for dates </label>
-        <input id="dateFormat" name="dateFormat" type="text" value="MM/DD/YYYY hh:mm:ss a">
+        <input id="dateFormat" name="dateFormat" type="text" style="width: 200px;" value="MM/DD/YYYY hh:mm:ss a">
         <label>(YYYY-MM-DDTHH:mm:ssZ for ISO 8601)</label><br>
         <label for="commaType">Print items from last </label>
         <select id="commaType" name="commaType">
@@ -47,6 +47,6 @@
         <input type="submit" value="Create CSV" onclick="createCSV()"><br><br>
 
         <button type="button" onclick="downloadCSV()">Download CSV</button><br>
-        <textarea name="output" id="output" style="width: 100%; height: 90%;"></textarea>
+        <textarea name="output" id="output" style="width: 100%; height: 400px;"></textarea>
     </body>
 </html>
