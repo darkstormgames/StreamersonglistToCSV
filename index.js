@@ -122,31 +122,31 @@ getData(uri)
         }
 
         if (createAll == false) {
-            makeFile(data, streamer + '_' + dateUntil + '_' + (datasetDelimiter == '\r\n' ? 'WIN' : 'UNIX') + '_' + commaString + '.csv');
+            makeFile(data, streamer + '_' + dateUntil + '_' + (datasetDelimiter == '\r\n' ? 'WIN' : 'UNIX') + '_' + commaString + '_' + sortOrder + '.csv');
         }
         else {
             datasetDelimiter = '\r\n';
             commaType = ';';
-            makeFile(data, streamer + '_' + dateUntil + (timeZoneId != '' ? '_' + timeZoneId : '') + '_WIN_semicolon.csv');
+            makeFile(data, streamer + '_' + dateUntil + (timeZoneId != '' ? '_' + timeZoneId : '') + '_WIN_semicolon_' + sortOrder + '.csv');
             commaType = ',';
-            makeFile(data, streamer + '_' + dateUntil + (timeZoneId != '' ? '_' + timeZoneId : '') + '_WIN_comma.csv');
+            makeFile(data, streamer + '_' + dateUntil + (timeZoneId != '' ? '_' + timeZoneId : '') + '_WIN_comma_' + sortOrder + '.csv');
             commaType = '\t';
-            makeFile(data, streamer + '_' + dateUntil + (timeZoneId != '' ? '_' + timeZoneId : '') + '_WIN_tab.csv');
+            makeFile(data, streamer + '_' + dateUntil + (timeZoneId != '' ? '_' + timeZoneId : '') + '_WIN_tab_' + sortOrder + '.csv');
             commaType = ':';
-            makeFile(data, streamer + '_' + dateUntil + (timeZoneId != '' ? '_' + timeZoneId : '') + '_WIN_colon.csv');
+            makeFile(data, streamer + '_' + dateUntil + (timeZoneId != '' ? '_' + timeZoneId : '') + '_WIN_colon_' + sortOrder + '.csv');
             commaType = ' ';
-            makeFile(data, streamer + '_' + dateUntil + (timeZoneId != '' ? '_' + timeZoneId : '') + '_WIN_space.csv');
+            makeFile(data, streamer + '_' + dateUntil + (timeZoneId != '' ? '_' + timeZoneId : '') + '_WIN_space_' + sortOrder + '.csv');
             datasetDelimiter = '\n';
             commaType = ';';
-            makeFile(data, streamer + '_' + dateUntil + (timeZoneId != '' ? '_' + timeZoneId : '') + '_UNIX_semicolon.csv');
+            makeFile(data, streamer + '_' + dateUntil + (timeZoneId != '' ? '_' + timeZoneId : '') + '_UNIX_semicolon_' + sortOrder + '.csv');
             commaType = ',';
-            makeFile(data, streamer + '_' + dateUntil + (timeZoneId != '' ? '_' + timeZoneId : '') + '_UNIX_comma.csv');
+            makeFile(data, streamer + '_' + dateUntil + (timeZoneId != '' ? '_' + timeZoneId : '') + '_UNIX_comma_' + sortOrder + '.csv');
             commaType = '\t';
-            makeFile(data, streamer + '_' + dateUntil + (timeZoneId != '' ? '_' + timeZoneId : '') + '_UNIX_tab.csv');
+            makeFile(data, streamer + '_' + dateUntil + (timeZoneId != '' ? '_' + timeZoneId : '') + '_UNIX_tab_' + sortOrder + '.csv');
             commaType = ':';
-            makeFile(data, streamer + '_' + dateUntil + (timeZoneId != '' ? '_' + timeZoneId : '') + '_UNIX_colon.csv');
+            makeFile(data, streamer + '_' + dateUntil + (timeZoneId != '' ? '_' + timeZoneId : '') + '_UNIX_colon_' + sortOrder + '.csv');
             commaType = ' ';
-            makeFile(data, streamer + '_' + dateUntil + (timeZoneId != '' ? '_' + timeZoneId : '') + '_UNIX_space.csv');
+            makeFile(data, streamer + '_' + dateUntil + (timeZoneId != '' ? '_' + timeZoneId : '') + '_UNIX_space_' + sortOrder + '.csv');
         }
     }
 });
