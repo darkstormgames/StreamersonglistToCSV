@@ -9,13 +9,13 @@ const { resolve } = require('path');
  * setting some default values
  */
 let uri = null,
-    streamer = 'miametzmusic',
+    streamer = 'miametzmusic',              // Name or numeric ID of the streamer
     latest = 10000,
-    period = 'all',
-    sortOrder = 'desc',
-    utcOffset = '',
-    timeZoneId = '',
-    dateFormat = 'MM/DD/YYYY hh:mm:ss a',
+    period = 'all',                         // Arguments: all | month | week | day | stream
+    sortOrder = 'desc',                     // Arguments: desc | asc
+    utcOffset = '+00:00',
+    timeZoneId = 'UTC',
+    dateFormat = 'YYYY-MM-DDTHH:mm:ssZ',    // ISO 8601 notation as default
     commaType = ';',                        // Arguments: ; | , | : | tab | " " 
     datasetDelimiter = '\r\n',              // Arguments: UNIX | WIN | WINDOWS
     createAll = false;
@@ -27,7 +27,7 @@ let args = process.argv.slice(2);
 if (args.length > 0) {
     args.forEach((item) => {
         let arg = item.split('=')[0];
-        let value = item.split('=')[1]
+        let value = item.split('=')[1];
 
         if (/^(?:(?:[A-Z]:\\.{1,})|(?:\/.{1,})).json$|^https:\/{2}api.streamersonglist.com\/v1\/streamers\/.{1,}\/playHistory/m.test(arg)) {
             uri = arg;
@@ -35,7 +35,7 @@ if (args.length > 0) {
         if (arg == 'createAll') {
             createAll = true;
         }
-        else {
+        else if (value) {
             switch(arg.toLowerCase()) {
                 case 'streamer':
                 case 's':
@@ -126,7 +126,6 @@ getData(uri)
                 default:
                     break;
             }
-
             makeFile(data, streamer + '_' + dateUntil + '_' + (datasetDelimiter == '\r\n' ? 'WIN' : 'UNIX') + '_' + commaString + '_' + sortOrder + '.csv');
         }
         else {
@@ -153,6 +152,8 @@ getData(uri)
             commaType = ' ';
             makeFile(data, streamer + '_' + dateUntil + (timeZoneId != '' ? '_' + timeZoneId : '') + '_UNIX_space_' + sortOrder + '.csv');
         }
+
+        console.log('Finished writing csv.');
     }
 });
 
@@ -216,16 +217,12 @@ function getTimeString(value) {
 }
 
 function getCleanCSVString(value) {
-    let retVal = '';
     if (value.includes(commaType)) {
-        retVal += '"';
-        if (value.includes('"')) {
-            value = value.replace(/"/g, '""');
-        }
-        retVal += value;
-        retVal += '"';
+        return '"' + (value.includes('"') ? value.replace(/"/g, '""') : value) + '"';
     }
-    return (retVal != '' ? retVal : (value.includes('"') ? value.replace(/"/g, '""') : value));
+    else {
+        return (value.includes('"') ? value.replace(/"/g, '""') : value);
+    }
 }
 
 function getData(uri) {

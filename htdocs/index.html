@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Songlist history to CSV</title>
+
+        <script src="./script/moment.js" charset="utf-8"></script>
+        <script src="./script/converter.js" charset="utf-8"></script>
+    </head>
+    <body>
+        <label for="streamer">Name/ID of the streamer</label>
+        <input id="streamer" name="streamer" type="text" value="miametzmusic"><br>
+        <label for="count">Number of items to print</label>
+        <input id="count" name="count" type="number" value="10000"><br>
+        <label for="period">Print items from last </label>
+        <select id="period" name="period">
+            <option value="all" selected>all</option>
+            <option value="month">month</option>
+            <option value="week">week</option>
+            <option value="day">day</option>
+            <option value="stream">stream</option>
+        </select><br>
+        <label for="sortOrder">Sort order </label>
+        <select id="sortOrder" name="sortOrder">
+            <option value="desc" selected>Newest > Oldest</option>
+            <option value="asc">Oldest > Newest</option>
+        </select><br>
+        <label for="utcOffset">Offset from UTC </label>
+        <input id="utcOffset" name="utcOffset" type="text" value="+00:00">
+        <label>(-06:00 for CST)</label><br>
+        <label for="dateFormat">Format for dates </label>
+        <input id="dateFormat" name="dateFormat" type="text" value="MM/DD/YYYY hh:mm:ss a">
+        <label>(YYYY-MM-DDTHH:mm:ssZ for ISO 8601)</label><br>
+        <label for="commaType">Print items from last </label>
+        <select id="commaType" name="commaType">
+            <option value=";" selected>semicolon</option>
+            <option value=",">comma</option>
+            <option value=":">colon</option>
+            <option value="tab">tab</option>
+            <option value=" ">space</option>
+        </select><br>
+        <label for="datasetDelimiter">Line endings </label>
+        <select id="datasetDelimiter" name="datasetDelimiter">
+            <option value="WIN" selected>Windows</option>
+            <option value="UNIX">Unix</option>
+        </select><br>
+        <input type="submit" value="Create CSV" onclick="createCSV()"><br><br>
+
+        <button type="button" onclick="downloadCSV()">Download CSV</button><br>
+        <textarea name="output" id="output" style="width: 100%; height: 90%;"></textarea>
+    </body>
+</html>
