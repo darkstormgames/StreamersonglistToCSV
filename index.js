@@ -16,8 +16,8 @@ let uri = null,
     utcOffset = '',
     timeZoneId = '',
     dateFormat = 'MM/DD/YYYY hh:mm:ss a',
-    commaType = ';',
-    datasetDelimiter = '\n',
+    commaType = ';',                        // Arguments: ; | , | : | tab | " " 
+    datasetDelimiter = '\r\n',              // Arguments: UNIX | WIN | WINDOWS
     createAll = false;
 
 /**
@@ -73,14 +73,17 @@ if (args.length > 0) {
                     break;
                 case 'commatype':
                 case 'comma':
-                    if (value == ',' || value == ';' || value == ':' || value == '\t' || value == ' ') {
+                    if (value == ',' || value == ';' || value == ':' || value.toLowerCase() == 'tab' || value == ' ') {
                         commaType = value;
                     }
                 case 'linebreak':
                 case 'datasetdelimiter':
                 case 'line':
-                    if (value == '\r\n' || value == '\n') {
-                        datasetDelimiter = value;
+                    if (value.toUpperCase() == 'UNIX') {
+                        datasetDelimiter = '\n';
+                    }
+                    else if (value.toUpperCase() == 'WIN' || value.toUpperCase() == 'WINDOWS') {
+                        datasetDelimiter = '\r\n';
                     }
                     break;
                 default:
@@ -103,25 +106,26 @@ getData(uri)
         console.log(data.total + ' total song requests');
 
         let dateUntil = moment.utc(data.items[0].createdAt, 'YYYY-MM-DDTHH:mm:ss.SSSZ', true).utcOffset(utcOffset).format('YYYYMMDD');
-        let commaString = 'semicolon';
-        switch(commaType) {
-            case ',':
-                commaString = 'comma';
-                break;
-            case '\t':
-                commaString = 'tab';
-                break;
-            case ':':
-                commaString = 'colon';
-                break;
-            case ' ':
-                commaString = 'space';
-                break;
-            default:
-                break;
-        }
-
+        
         if (createAll == false) {
+            let commaString = 'semicolon';
+            switch(commaType) {
+                case ',':
+                    commaString = 'comma';
+                    break;
+                case '\t':
+                    commaString = 'tab';
+                    break;
+                case ':':
+                    commaString = 'colon';
+                    break;
+                case ' ':
+                    commaString = 'space';
+                    break;
+                default:
+                    break;
+            }
+
             makeFile(data, streamer + '_' + dateUntil + '_' + (datasetDelimiter == '\r\n' ? 'WIN' : 'UNIX') + '_' + commaString + '_' + sortOrder + '.csv');
         }
         else {
@@ -218,7 +222,7 @@ function getCleanCSVString(value) {
         retVal += value;
         retVal += '"';
     }
-    return (retVal != '' ? retVal : value);
+    return (retVal != '' ? retVal : (value.includes('"') ? value.replace(/"/g, '""') : value));
 }
 
 function getData(uri) {
