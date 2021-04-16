@@ -29,7 +29,7 @@ if (args.length > 0) {
         let arg = item.split('=')[0];
         let value = item.split('=')[1]
 
-        if (/^(?:(?:[A-Z]:\\.{8,})|(?:\/.{6,})).json$|^https:\/{2}api.streamersonglist.com\/v1\/streamers\/.{1,}\/playHistory/m.test(arg)) {
+        if (/^(?:(?:[A-Z]:\\.{1,})|(?:\/.{1,})).json$|^https:\/{2}api.streamersonglist.com\/v1\/streamers\/.{1,}\/playHistory/m.test(arg)) {
             uri = arg;
         }
         if (arg == 'createAll') {
@@ -76,6 +76,7 @@ if (args.length > 0) {
                     if (value == ',' || value == ';' || value == ':' || value.toLowerCase() == 'tab' || value == ' ') {
                         commaType = value;
                     }
+                    break;
                 case 'linebreak':
                 case 'datasetdelimiter':
                 case 'line':
@@ -157,39 +158,41 @@ getData(uri)
 
 function makeFile(data, fileName) {
     let out =   'requestId' + commaType + 
-    'songTitle' + commaType + 
-    'songArtist' + commaType + 
-    'isNonlist' + commaType + 
-    'amount' + commaType + 
-    'requesterId' + commaType + 
-    'requesterName' + commaType + 
-    'requestSource' + commaType + 
-    'note' + commaType + 
-    'createdAt' + commaType + 
-    'playedAt' + datasetDelimiter;
+                'songTitle' + commaType + 
+                'songArtist' + commaType + 
+                'isNonlist' + commaType + 
+                'amount' + commaType + 
+                'requesterId' + commaType + 
+                'requesterName' + commaType + 
+                'requestSource' + commaType + 
+                'note' + commaType + 
+                'createdAt' + commaType + 
+                'playedAt' + datasetDelimiter;
 
     data.items.forEach((item) => {
         out += item.id + commaType;
+
         if (item.nonlistSong != null) {
-        out += getCleanCSVString(item.nonlistSong) + commaType + commaType + '1' + commaType;
+            out += getCleanCSVString(item.nonlistSong) + commaType + commaType + '1' + commaType;
         }
         else {
-        out += getCleanCSVString(item.song.title) + commaType + getCleanCSVString(item.song.artist) + commaType + '0' + commaType;
+            out += getCleanCSVString(item.song.title) + commaType + getCleanCSVString(item.song.artist) + commaType + '0' + commaType;
         }
+
         out += item.donationAmount + commaType;
         
         if (!item.requests[0]) {
-        out += commaType + commaType + commaType;
+            out += commaType + commaType + commaType;
         }
         else {
-        out += item.requests[0].id + commaType + getCleanCSVString(item.requests[0].name) + commaType + getCleanCSVString(item.requests[0].source) + commaType;
+            out += item.requests[0].id + commaType + getCleanCSVString(item.requests[0].name) + commaType + getCleanCSVString(item.requests[0].source) + commaType;
         }
         
         if (!item.note) {
-        out += commaType;
+            out += commaType;
         }
         else {
-        out += getCleanCSVString(item.note) + commaType;
+            out += getCleanCSVString(item.note) + commaType;
         }
         
         out += getCleanCSVString(getTimeString(item.createdAt)) + commaType;
@@ -244,7 +247,7 @@ function getData(uri) {
                 resolve(null);
             });
         }
-        else if (/^(?:(?:[A-Z]:\\.{8,})|(?:\/.{6,})).json$/m.test(uri)) {
+        else if (/^(?:(?:[A-Z]:\\.{1,})|(?:\/.{1,})).json$/m.test(uri)) {
             /** Read the .json-file */
             resolve(JSON.parse(fs.readFileSync(uri)));
         }
