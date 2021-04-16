@@ -13,11 +13,11 @@ let uri = null,
     latest = 10000,
     period = 'all',
     sortOrder = 'desc',
-    utcOffset = '',
-    timeZoneId = '',
+    utcOffset = '+06:00',
+    timeZoneId = 'CST',
     dateFormat = 'MM/DD/YYYY hh:mm:ss a',
     commaType = ';',
-    datasetDelimiter = '\n',
+    datasetDelimiter = '\r\n',
     createAll = false;
 
 /**
